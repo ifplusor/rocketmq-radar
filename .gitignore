@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+
+# clangd
+.cache/
+
+# visual studio code
+.vscode/
+
+# clion
+.idea/
+cmake-build-debug/
+
+# project
+build/
