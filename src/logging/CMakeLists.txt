@@ -12,6 +12,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-add_subdirectory(utility)
-add_subdirectory(logging)
-add_subdirectory(networking)
+add_library(radar-logging STATIC)
+target_sources(
+  radar-logging
+  PUBLIC LogLevel.hpp LoggerConfig.hpp spdlog/SpdlogLoggerImpl.hpp Logger.hpp
+         Logging.hpp
+  PRIVATE spdlog/SpdlogLoggerImpl.cpp Logging.cpp)
+target_include_directories(radar-logging PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_link_libraries(
+  radar-logging
+  PUBLIC pthread spdlog::spdlog
+  PUBLIC radar-util)
+
+add_library(rocketmq::radar::logging ALIAS radar-logging)

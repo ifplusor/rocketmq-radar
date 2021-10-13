@@ -12,6 +12,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-add_subdirectory(utility)
-add_subdirectory(logging)
-add_subdirectory(networking)
+add_library(radar-libevent STATIC)
+target_sources(
+  radar-libevent
+  PUBLIC EventLoop.h BufferEvent.hpp
+  PRIVATE EventLoop.cpp BufferEvent.cpp)
+target_include_directories(radar-libevent PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_link_libraries(
+  radar-libevent
+  PUBLIC event_core event_extra event_pthreads
+  PUBLIC radar-util radar-logging)
+
+add_library(rocketmq::radar::networking::libevent ALIAS radar-libevent)

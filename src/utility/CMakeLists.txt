@@ -12,6 +12,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-add_subdirectory(utility)
-add_subdirectory(logging)
-add_subdirectory(networking)
+add_library(radar-util INTERFACE)
+target_sources(
+  radar-util
+  PUBLIC filesystem/Filesystem.hpp filesystem/Ensure.hpp
+  PUBLIC memory/MakeUnique.hpp
+  PUBLIC thread/Thread.hpp)
+target_include_directories(
+  radar-util
+  INTERFACE ${CMAKE_SOURCE_DIR}/include
+  INTERFACE ${CMAKE_SOURCE_DIR}/src)
+target_link_libraries(radar-util INTERFACE ghc_filesystem)
+
+add_library(rocketmq::radar::util ALIAS radar-util)
